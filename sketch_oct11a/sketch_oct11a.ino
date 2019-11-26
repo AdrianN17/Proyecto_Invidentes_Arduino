@@ -1,31 +1,28 @@
 #include "TinyGPS++.h"
-#include "AltSoftSerial.h"
 #include "NeoSWSerial.h"
-
+#include "AltSoftSerial.h"
 
 #define PIN_TRIGGER 6
 #define PIN_ECHO 7
 
-//NeoSWSerial BT(8 ,9); // RX | TX
-NeoSWSerial serial_connection(2,3); //RX=pin 10, TX=pin 11
+NeoSWSerial BT(10,11); // RX | TX
+NeoSWSerial serial_connection(9,8); //RX=pin 10, TX=pin 11
 TinyGPSPlus gps;//This is the GPS object that will pretty much do all the grunt work with the NMEA data
-
-float counter = 0;
-float max_counter = 1.5;
-float oldTime = 0;
 
 
 float datos[3] = {0,0,0};
 
 void setup()
 {
+  Serial.begin(9600);
+  
+  //BT.begin(9600);
+
+  serial_connection.begin(9600);
+  
   pinMode(PIN_TRIGGER, OUTPUT);
   pinMode(PIN_ECHO, INPUT); 
   digitalWrite(PIN_TRIGGER, LOW);
- 
-  serial_connection.begin(9600);
-
-  //BT.begin(9600);
 }
 
 void loop()
@@ -37,7 +34,7 @@ void loop()
   String cadena=  (String)datos[0] + "-" + (String)datos[1] + "-" +(String)datos[2] ;
   
   //BT.println(cadena);
-   
+  Serial.println(cadena);
 }
 
 void ultrasonido_modulo()
@@ -65,14 +62,5 @@ void gps_modulo()
   {    
     datos[1] = gps.location.lat();
     datos[2] = gps.location.lng();
-  }
-}
-
-void changed(bool value)
-{
-  if(value)
-  {
-
-    
   }
 }
