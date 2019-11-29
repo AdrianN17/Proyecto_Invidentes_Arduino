@@ -40,7 +40,7 @@ void loop() {
   }
   ultrasonido_modulo();
   
-  String cadena=  (String)datos[0] + "-" + (String)datos[1] + "-" +(String)datos[2] ;
+  String cadena=  (String)datos[0] + "_" + (String)datos[1] + "_" +(String)datos[2] ;
   
   Bluetooth.println(cadena);
   
